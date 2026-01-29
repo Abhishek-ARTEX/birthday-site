@@ -52,18 +52,38 @@ const animationTimeline = () => {
     const tl = new TimelineMax();
 
     // Helper to pause and wait for interaction (Autoplay logic)
-    // Flag to track if typing is in progress
-    let isTyping = true;
-
-    // Helper to pause and wait for interaction (Autoplay logic)
     const pauseTimeline = (requireSendBtn = false) => {
-        // We do NOT pause unless it's the specific "Send" button moment where we want a tiny user delay, 
-        // OR we can just let it flow. User requested "Autoplay".
+        if (requireSendBtn) {
+            tl.pause();
+            const sendBtn = document.querySelector('.fake-btn');
 
+            // Logic to visually "send" and resume
+            const performSend = () => {
+                sendBtn.innerHTML = "Sent! <span style='font-size:1.2rem'>✈️</span>";
+                sendBtn.style.backgroundColor = "#7dd175";
+                sendBtn.style.pointerEvents = "none";
 
+                setTimeout(() => {
+                    tl.resume();
+                }, 500);
+            };
+
+            // 1. Auto-continue after 2.5 seconds (Autoplay)
+            const autoTimer = setTimeout(() => {
+                performSend();
+            }, 500);
+
+            // 2. Allow manual click (cancels auto-timer to avoid double resume)
+            const handleManualClick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                clearTimeout(autoTimer); // Stop the auto-timer
+                performSend();
+            };
+
+            sendBtn.addEventListener('click', handleManualClick, { once: true });
+        }
     };
-
-
 
     tl.to(".container", 0.6, {
         visibility: "visible"
@@ -106,6 +126,7 @@ const animationTimeline = () => {
         .from(".four", 0.7, {
             scale: 0.2,
             opacity: 0,
+            y: 10
         })
         .from(".fake-btn", 0.3, {
             scale: 0.2,
@@ -217,6 +238,16 @@ const animationTimeline = () => {
         },
             "-=2"
         )
+        .staggerTo(
+            ".satellite-img",
+            0.8, {
+            scale: 1,
+            opacity: 1,
+            ease: Back.easeOut.config(1.7),
+        },
+            0.2,
+            "-=0.5"
+        )
         .from(".hat", 0.5, {
             x: -100,
             y: 350,
@@ -281,7 +312,13 @@ const animationTimeline = () => {
             rotation: 90,
         },
             "+=1"
-        );
+        )
+        .to(".nine", 0.5, {
+            opacity: 0,
+            y: -20,
+            zIndex: "-1"
+        })
+
 
     // Restart Animation on click
     const replyBtn = document.getElementById("replay");

@@ -225,5 +225,7 @@ class AestheticTree {
 }
 
 window.addEventListener('load', () => {
-    new AestheticTree('treeCanvas');
+    setTimeout(() => {
+        new AestheticTree('treeCanvas');
+    }, 2500);
 });

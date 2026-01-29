@@ -43,6 +43,11 @@ body {
   font-size: 3rem;
 }
 
+.four {
+  z-index: 40 !important;
+  /* Ensure it stays above later elements */
+}
+
 .four .text-box {
   border: 4px solid #aaa;
   border-radius: 10px;
@@ -237,6 +242,11 @@ body {
   margin: 10px 0 0;
 }
 
+.nine {
+  visibility: hidden;
+  /* Hide to prevent click interception */
+}
+
 .nine p {
   font-size: 2rem;
   font-weight: lighter;
@@ -307,8 +317,75 @@ body {
     font-size: 1.4rem;
   }
 
-  .nine p {
-    font-size: 1.5rem;
-    font-weight: lighter;
+
+  /* Ensure mobile responsiveness */
+  @media screen and (max-width: 600px) {
+    .final-gallery {
+      flex-direction: column;
+    }
+
+    .final-img {
+      max-width: 80vw;
+      max-height: 25vh;
+    }
+  }
+}
+
+/* Satellite Images (Profile Popup) */
+.satellite-img {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  z-index: 2;
+}
+
+.sat-1 {
+  top: 0;
+  left: 50%;
+  margin-left: -260px;
+  /* Left of image */
+  transform: rotate(-15deg);
+}
+
+.sat-2 {
+  top: 50px;
+  left: 50%;
+  margin-left: 180px;
+  /* Right of image */
+  transform: rotate(10deg);
+}
+
+.sat-3 {
+  top: 250px;
+  left: 50%;
+  margin-left: 190px;
+  transform: rotate(5deg);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 500px) {
+  .satellite-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .sat-1 {
+    margin-left: -140px;
+    top: -10px;
+  }
+
+  .sat-2 {
+    margin-left: 100px;
+    top: 20px;
+  }
+
+  .sat-3 {
+    margin-left: 110px;
+    top: 200px;
   }
 }
