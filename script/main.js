@@ -301,10 +301,11 @@ const animationTimeline = () => {
             0.3
         )
         .to(".six", 0.5, {
-            opacity: 0,
-            y: 30,
-            zIndex: "-1",
+            opacity: 1, // Keep profile visible
+            y: 30, // Keep the slight move if desired, or remove
+            zIndex: "1", // Keep z-index
         })
+        .set(".nine", { visibility: "visible" }) // Ensure container is visible
         .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
         .to(
             ".last-smile",
@@ -312,12 +313,7 @@ const animationTimeline = () => {
             rotation: 90,
         },
             "+=1"
-        )
-        .to(".nine", 0.5, {
-            opacity: 0,
-            y: -20,
-            zIndex: "-1"
-        })
+        );
 
 
     // Restart Animation on click
